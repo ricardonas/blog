@@ -1,15 +1,19 @@
 package com.blog.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -24,20 +28,22 @@ public class User {
     private String email;
 
     @NotBlank
-    private String password;
-
-    private String token;
+    private String senha;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Post> posts;
 
-    public User() {}
+    @ManyToMany
+    private List<Profile> profiles;
 
-    public User(@NotBlank String name, @NotBlank @Email String email, @NotBlank String password) {
+    public User() {
+    }
+
+    public User(@NotBlank String name, @NotBlank @Email String email, @NotBlank String senha) {
         this.name = name;
         this.email = email;
-        this.password = password;
+        this.senha = senha;
     }
 
     public String getName() {
@@ -56,12 +62,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public List<Post> getPosts() {
@@ -76,11 +82,46 @@ public class User {
         return id;
     }
 
-    public String getToken() {
-        return token;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.profiles;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public List<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
 }
