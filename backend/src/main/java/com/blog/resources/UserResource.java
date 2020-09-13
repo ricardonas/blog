@@ -25,7 +25,7 @@ public class UserResource {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN'  )")
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }
