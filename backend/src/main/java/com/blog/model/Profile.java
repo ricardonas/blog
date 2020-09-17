@@ -13,7 +13,6 @@ public class Profile implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ColumnDefault("USER")
     private String type;
 
     public Profile() {

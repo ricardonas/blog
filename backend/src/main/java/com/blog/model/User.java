@@ -1,17 +1,20 @@
 package com.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})} )
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
@@ -31,10 +34,10 @@ public class User implements UserDetails {
     private String senha;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Profile> profiles;
 
     public User() {
@@ -43,7 +46,7 @@ public class User implements UserDetails {
     public User(@NotBlank String name, @NotBlank @Email String email, @NotBlank String senha) {
         this.name = name;
         this.email = email;
-        this.senha = senha;
+        this.setSenha(senha);
     }
 
     public String getName() {
@@ -67,7 +70,7 @@ public class User implements UserDetails {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        this.senha = new BCryptPasswordEncoder().encode(senha);
     }
 
     public List<Post> getPosts() {

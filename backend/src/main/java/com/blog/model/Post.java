@@ -2,6 +2,7 @@ package com.blog.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +21,6 @@ public class Post implements Serializable {
     @NotBlank
     private String title;
 
-    @Lob
     @NotBlank
     private String text;
 

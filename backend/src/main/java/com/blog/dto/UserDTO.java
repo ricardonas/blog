@@ -2,6 +2,7 @@ package com.blog.dto;
 
 import com.blog.model.Post;
 import com.blog.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.List;
