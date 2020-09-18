@@ -1,12 +1,6 @@
 import React from "react";
-import Login from "./pages/Login";
+import Login from './pages/Login';
 
-function App() {
-  return (
-    <div className="App">
-      <Login></Login>
-    </div>
-  );
-}
+const App = () => (<Login />);
 
 export default App;
