@@ -1,6 +1,14 @@
-import React from "react";
-import Login from './pages/Login';
+import React from 'react';
 
-const App = () => (<Login />);
+import GlobalStyles from './styles/global';
+
+import Routes from './routes';
+
+const App = () => (
+    <>
+        <GlobalStyles />
+        <Routes />
+    </>
+);
 
 export default App;

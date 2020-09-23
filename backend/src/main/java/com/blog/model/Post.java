@@ -24,7 +24,7 @@ public class Post implements Serializable {
     @NotBlank
     private String text;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:MM", locale = "pt-BR", timezone = "UTC")
     private LocalDateTime post_date;
 
     @JsonBackReference
@@ -71,5 +71,9 @@ public class Post implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public long getId() {
+        return id;
     }
 }

@@ -26,13 +26,13 @@ public class DummyData {
 
     //@PostConstruct
     public void saveUserAndPosts() {
-        User ricardo = new User("Ricardo", "ricardo@gmail.com", "123456");
+        User ricardo = new User("Maria", "maria@gmail.com", "Euamodeus231@");
         userRepository.save(ricardo);
 
         Profile profile = new Profile("ADMIN");
         profileRepository.save(profile);
 
-        Post post1 = new Post("Space X", "Lançamento de foguetes da space x", ricardo);
+        Post post1 = new Post("Post da Mariazinha", "blablablablablablabla", ricardo);
         postRepository.save(post1);
 
         ricardo.setProfiles(Collections.singletonList(profile));

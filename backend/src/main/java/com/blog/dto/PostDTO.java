@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class PostDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private long id;
     private String title;
     private String text;
     private LocalDateTime post_date;
@@ -15,8 +16,9 @@ public class PostDTO implements Serializable {
     public PostDTO() {}
 
     public PostDTO(Post post) {
+        id = post.getId();
         title = post.getTitle();
-        text = post.getTitle();
+        text = post.getText();
         post_date = post.getPost_date();
     }
 
@@ -42,5 +44,9 @@ public class PostDTO implements Serializable {
 
     public void setPost_date(LocalDateTime post_date) {
         this.post_date = post_date;
+    }
+
+    public long getId() {
+        return id;
     }
 }
