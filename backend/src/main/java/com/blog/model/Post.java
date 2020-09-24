@@ -3,6 +3,7 @@ package com.blog.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class Post implements Serializable {
     @NotBlank
     private String title;
 
-    @NotBlank
+    @Column(columnDefinition="TEXT")
     private String text;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:MM", locale = "pt-BR", timezone = "UTC")
@@ -29,7 +30,7 @@ public class Post implements Serializable {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User user;
 
     public Post() {}
@@ -37,7 +38,6 @@ public class Post implements Serializable {
     public Post(@NotBlank String title, @NotBlank String text, User user) {
         this.title = title;
         this.text = text;
-        this.user = user;
         this.post_date = LocalDateTime.now();
     }
 
@@ -62,7 +62,7 @@ public class Post implements Serializable {
     }
 
     public void setPost_date(LocalDateTime post_date) {
-        this.post_date = post_date;
+        this.post_date = LocalDateTime.now();
     }
 
     public User getUser() {

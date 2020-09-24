@@ -1,15 +1,14 @@
 package com.blog.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class User implements UserDetails {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Post> posts;
+    private List<Post> posts = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Profile> profiles;
@@ -46,6 +45,7 @@ public class User implements UserDetails {
     public User(@NotBlank String name, @NotBlank @Email String email, @NotBlank String senha) {
         this.name = name;
         this.email = email;
+        //uso do setSenha para ele criptografar (bcrypt) a senha.
         this.setSenha(senha);
     }
 

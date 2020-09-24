@@ -1,11 +1,13 @@
 package com.blog.dto;
 
 import com.blog.model.Post;
+import com.blog.model.Profile;
 import com.blog.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -51,4 +53,5 @@ public class UserDTO implements Serializable {
     public void setPostList(List<Post> postList) {
         this.postDTOList = postList;
     }
+
 }

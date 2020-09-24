@@ -1,35 +1,38 @@
 package com.blog.resources;
 
 import com.blog.dto.PostDTO;
-import com.blog.model.Post;
-import com.blog.repository.PostRepository;
+import com.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/posts")
 public class PostResource {
 
     @Autowired
-    PostRepository postRepository;
+    private PostService postService;
 
-    @GetMapping
-    public List<PostDTO> findAll() {
-        List<Post> postList = postRepository.findAll();
-        return postList.stream().map(PostDTO::new).collect(Collectors.toList());
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createPost(@RequestBody PostDTO postDTO) {
+        postService.createPost(postDTO);
     }
 
     @GetMapping("/{id}")
-    public void deleteById(@PathVariable("id") long id ) {
-        postRepository.deleteById(id);
+    public PostDTO getPostById(@PathVariable long id) {
+        return postService.findPostById(id);
     }
 
-    @PostMapping
-    public void createPost(Post post) {
-        postRepository.save(post);
+    @GetMapping
+    public List<PostDTO> getPosts() {
+        return postService.getPosts();
     }
 
+    @DeleteMapping("/{id}")
+    public void deletePostByID(@PathVariable long id) {
+        postService.deletePostById(id);
+    }
 }
